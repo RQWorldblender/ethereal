@@ -127,6 +127,15 @@ minetest.register_craft({
 		{'', 'default:steel_ingot'},
 	}
 })
+-- Add the reversed image recipe for the crystal axe
+minetest.register_craft({
+	output = 'ethereal:axe_crystal',
+	recipe = {
+		{'ethereal:crystal_ingot', 'ethereal:crystal_ingot'},
+		{'default:steel_ingot', 'ethereal:crystal_ingot'},
+		{'default:steel_ingot', ''},
+	}
+})
 
 minetest.register_craft({
 	output = 'ethereal:axe_crystal',
@@ -171,7 +180,6 @@ minetest.register_tool("ethereal:shovel_crystal", {
 	description = S("Crystal (soft touch) Shovel"),
 	inventory_image = "crystal_shovel.png",
 	wield_image = "crystal_shovel.png^[transformR90",
-
 	sound = {breaks = "default_tool_breaks"},
 	on_use = function(itemstack, user, pointed_thing)
 
@@ -197,11 +205,10 @@ minetest.register_tool("ethereal:shovel_crystal", {
 			nodeupdate(pos)
 
 			inv:add_item("main", {name = nn})
-
+			
 			if not minetest.setting_getbool("creative_mode") then
 				itemstack:add_wear(65535 / 100) -- 111 uses
 			end
-
 			minetest.sound_play("default_dirt_footstep", {pos = pos, gain = 0.35})
 
 			return itemstack
@@ -223,7 +230,7 @@ minetest.register_tool("ethereal:crystal_gilly_staff", {
 	description = S("Crystal Gilly Staff"),
 	inventory_image = "crystal_gilly_staff.png",
 	wield_image = "crystal_gilly_staff.png",
-
+	sound = {breaks = "default_tool_breaks"},
 	on_use = function(itemstack, user, pointed_thing)
 		if user:get_breath() < 10 then
 			user:set_breath(10)
