@@ -122,9 +122,7 @@ minetest.register_abm({
 	end,
 })
 
--- If torch touching water then drop as item (when enabled)
 if ethereal.torchdrop == true then
-
 minetest.register_abm({
 	label = "Ethereal drop torch",
 	nodenames = {"default:torch", "group:torch"}, -- group:torch for new 3d torches
@@ -157,5 +155,4 @@ minetest.register_abm({
 		end
 	end,
 })
-
 end
