@@ -31,9 +31,7 @@ minetest.register_node("ethereal:dry_dirt", {
 	tiles = {"ethereal_dry_dirt.png"},
 	is_ground_content = ethereal.cavedirt,
 	groups = {crumbly = 3},
-	sounds = default.node_sound_dirt_defaults({
-		footstep = {name = "default_grass_footstep", gain = 0.25},
-	}),
+	sounds = default.node_sound_dirt_defaults(),
 })
 
 minetest.register_craft({
@@ -68,7 +66,9 @@ for n = 1, #dirts do
 			wet = "farming:soil_wet"
 		},
 		drop = "default:dirt",
-		sounds = default.node_sound_dirt_defaults()
+		sounds = default.node_sound_dirt_defaults({
+		footstep = {name = "default_grass_footstep", gain = 0.25},
+		}),
 	})
 
 end

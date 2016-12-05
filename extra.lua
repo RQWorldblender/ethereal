@@ -41,26 +41,27 @@ minetest.register_craft({
 		{"ethereal:bamboo", "ethereal:bamboo"},
 	}
 })
+if ethereal.xcraft == true then
+    -- X pattern craft recipes (5x 'a' in X pattern gives 5 of 'b'); will appear if the relevant setting is enabled
+    local cheat = {
+        {"default:cobble", "default:gravel", 5},
+        {"default:gravel", "default:dirt", 5},
+        {"default:dirt", "default:sand", 5},
+        {"default:ice", "default:snow", 20},
+        {"ethereal:dry_dirt", "default:desert_sand", 5},
+    }
 
--- X pattern craft recipes (5x 'a' in X pattern gives 5 of 'b')
-local cheat = {
-	{"default:cobble", "default:gravel", 5},
-	{"default:gravel", "default:dirt", 5},
-	{"default:dirt", "default:sand", 5},
-	{"default:ice", "default:snow", 20},
-	{"ethereal:dry_dirt", "default:desert_sand", 5},
-}
+    for n = 1, #cheat do
 
-for n = 1, #cheat do
-
-	minetest.register_craft({
-		output = cheat[n][2] .. " " .. cheat[n][3],
-		recipe = {
-			{cheat[n][1], "", cheat[n][1]},
-			{"", cheat[n][1], ""},
-			{cheat[n][1], "", cheat[n][1]},
-		}
-	})
+        minetest.register_craft({
+            output = cheat[n][2] .. " " .. cheat[n][3],
+            recipe = {
+                {cheat[n][1], "", cheat[n][1]},
+                {"", cheat[n][1], ""},
+                {cheat[n][1], "", cheat[n][1]},
+            }
+        })
+    end
 end
 
 -- Paper (2x3 string = 4 paper)
@@ -215,10 +216,9 @@ minetest.register_node("ethereal:glostone", {
 })
 
 minetest.register_craft({
+    type = "shapeless",
 	output = "ethereal:glostone",
-	recipe = {
-		{"default:torch", "default:stone", "dye:yellow"},
-	}
+	recipe = {"default:torch", "default:stone", "dye:yellow"},
 })
 
 -- Charcoal Lump

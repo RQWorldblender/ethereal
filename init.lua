@@ -14,6 +14,7 @@ ethereal.leafwalk = false -- true for walkable leaves, false to fall through
 ethereal.cavedirt = true -- caves chop through dirt when true
 ethereal.torchdrop = true -- torches drop when touching water
 ethereal.papyruswalk = true -- papyrus can be walked on
+ethereal.xcraft = true -- allow one-way crafts between cobble, gravel, dirt, sand, ice, snow, dry dirt, and desert sand
 
 -- Set following to 1 to enable biome or 0 to disable
 ethereal.glacier   = 1 -- Ice glaciers with snow
