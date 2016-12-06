@@ -50,7 +50,7 @@ minetest.register_node("ethereal:crystal_block", {
 	tiles = {"crystal_block.png"},
 	light_source = 9,
 	is_ground_content = false,
-	groups = {cracky = 1, level = 2, puts_out_fire = 1},
+	groups = {cracky = 1, level = 2, puts_out_fire = 1, cools_lava = 1},
 	sounds = default.node_sound_glass_defaults(),
 })
 
@@ -110,8 +110,8 @@ minetest.register_tool("ethereal:axe_crystal", {
 		groupcaps = {
 			choppy = {
 				times = {[1] = 2.00, [2] = 0.80, [3] = 0.40},
-				uses = 30,
-				maxlevel = 2
+				uses = 40,
+				maxlevel = 3
 			},
 		},
 		damage_groups = {fleshy = 7},
@@ -161,7 +161,7 @@ minetest.register_tool("ethereal:pick_crystal", {
 				maxlevel = 3
 			},
 		},
-		damage_groups = {fleshy = 7},
+		damage_groups = {fleshy = 6},
 	},
 	sound = {breaks = "default_tool_breaks"},
 })
@@ -174,12 +174,40 @@ minetest.register_craft({
 		{"", "default:steel_ingot", ""},
 	}
 })
-
--- Crystal Shovel (with Soft Touch so player can dig up dirt with grass intact)
+-- Crystal Shovel (without Soft Touch)
 minetest.register_tool("ethereal:shovel_crystal", {
-	description = S("Crystal (soft touch) Shovel"),
+	description = S("Crystal Shovel"),
 	inventory_image = "crystal_shovel.png",
 	wield_image = "crystal_shovel.png^[transformR90",
+	tool_capabilities = {
+		full_punch_interval = 0.9,
+		max_drop_level = 1,
+		groupcaps = {
+			crumbly = {
+				times = {[1] = 0.25, [2] = 0.25, [3] = 0.25},
+				uses = 40,
+				maxlevel = 3
+			},
+		},
+		damage_groups = {fleshy = 5},
+	},
+	sound = {breaks = "default_tool_breaks"},
+})
+
+minetest.register_craft({
+	output = "ethereal:shovel_crystal",
+	recipe = {
+		{"ethereal:crystal_ingot"},
+		{"default:steel_ingot"},
+		{"default:steel_ingot"},
+	}
+})
+
+-- Crystal Shovel (with Soft Touch so player can dig up dirt with grass intact, handle is colored like wooden sticks to differentiate from the regular crystal shovel)
+minetest.register_tool("ethereal:shovel_crystal_soft", {
+	description = S("Crystal (soft touch) Shovel"),
+	inventory_image = "crystal_shovel_soft.png",
+	wield_image = "crystal_shovel_soft.png^[transformR90",
 	sound = {breaks = "default_tool_breaks"},
 	on_use = function(itemstack, user, pointed_thing)
 
@@ -195,7 +223,7 @@ minetest.register_tool("ethereal:shovel_crystal", {
 		local pos = pointed_thing.under
 		local nn = minetest.get_node(pos).name
 
-		-- Is node dirt, sand or gravel
+		-- Is node dirt, sand, gravel, or still crumbly?
 		if minetest.get_item_group(nn, "crumbly") > 0 then
 
 			local inv = user:get_inventory()
@@ -204,23 +232,29 @@ minetest.register_tool("ethereal:shovel_crystal", {
 
 			nodeupdate(pos)
 
+			if not inv:contains_item("main", {name = nn}) and minetest.setting_getbool("creative_mode") then
+				inv:add_item("main", {name = nn})
+			end
+			
 			if not minetest.setting_getbool("creative_mode") then
 				inv:add_item("main", {name = nn})
+				
 				itemstack:add_wear(65535 / 100) -- 111 uses
 			end
-			minetest.sound_play("default_dirt_footstep", {pos = pos, gain = 0.35})
-
+			
+			minetest.sound_play("default_dig_crumbly", {gain = 0.4})
+			
 			return itemstack
 		end
 	end,
 })
 
 minetest.register_craft({
-	output = "ethereal:shovel_crystal",
+	output = "ethereal:shovel_crystal_soft",
 	recipe = {
 		{"ethereal:crystal_ingot"},
-		{"default:steel_ingot"},
-		{"default:steel_ingot"},
+		{"default:stick"},
+		{"default:stick"},
 	}
 })
 
@@ -229,7 +263,6 @@ minetest.register_tool("ethereal:crystal_gilly_staff", {
 	description = S("Crystal Gilly Staff"),
 	inventory_image = "crystal_gilly_staff.png",
 	wield_image = "crystal_gilly_staff.png",
-	sound = {breaks = "default_tool_breaks"},
 	on_use = function(itemstack, user, pointed_thing)
 		if user:get_breath() < 10 then
 			user:set_breath(10)

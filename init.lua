@@ -12,8 +12,11 @@ ethereal = {}
 ethereal.leaftype = 0 -- 0 for 2D plantlike, 1 for 3D allfaces
 ethereal.leafwalk = false -- true for walkable leaves, false to fall through
 
-ethereal.crops = true -- enable appearance of built-in strawberries and onions
-ethereal.fishing = true -- enable appearance of fish and fishing rods
+-- File execution control
+ethereal.bonemeal = true -- enable the appearance of bone, bonemeal, and their associated crafts
+ethereal.crops = true -- enable the appearance of built-in strawberries and onions
+ethereal.crystal = true -- enable the appearance of crystal spikes and everything associated with them
+ethereal.fishing = true -- enable the appearance of fish and fishing rods
 
 -- Extra settings
 ethereal.cavedirt = true -- caves chop through dirt when true
@@ -61,7 +64,6 @@ local path = minetest.get_modpath("ethereal")
 
 dofile(path .. "/plantlife.lua")
 dofile(path .. "/mushroom.lua")
-dofile(path .. "/crystal.lua")
 dofile(path .. "/water.lua")
 dofile(path .. "/dirt.lua")
 dofile(path .. "/leaves.lua")
@@ -73,18 +75,25 @@ dofile(path .. "/fences.lua")
 dofile(path .. "/gates.lua")
 dofile(path .. "/mapgen.lua")
 dofile(path .. "/food.lua")
-dofile(path .. "/bonemeal.lua")
 dofile(path .. "/compatibility.lua")
 dofile(path .. "/stairs.lua")
 dofile(path .. "/lucky_block.lua")
 
-if ethereal.fishing == true then
-	dofile(path .. "/fishing.lua")
+if ethereal.bonemeal == true then
+	dofile(path .. "/bonemeal.lua")
 end
 
 if ethereal.crops == true then
 	dofile(path .. "/onion.lua")
 	dofile(path .. "/strawberry.lua")
+end
+
+if ethereal.crystal == true then
+	dofile(path .. "/crystal.lua")
+end
+
+if ethereal.fishing == true then
+	dofile(path .. "/fishing.lua")
 end
 
 if minetest.get_modpath("xanadu") then
