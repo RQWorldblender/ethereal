@@ -162,7 +162,7 @@ minetest.register_node("ethereal:stone_ladder", {
 })
 
 minetest.register_craft({
-	output = "ethereal:stone_ladder 4",
+	output = "ethereal:stone_ladder 3",
 	recipe = {
 		{"group:stone", "", "group:stone"},
 		{"group:stone", "group:stone", "group:stone"},

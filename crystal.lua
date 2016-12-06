@@ -204,9 +204,8 @@ minetest.register_tool("ethereal:shovel_crystal", {
 
 			nodeupdate(pos)
 
-			inv:add_item("main", {name = nn})
-			
 			if not minetest.setting_getbool("creative_mode") then
+				inv:add_item("main", {name = nn})
 				itemstack:add_wear(65535 / 100) -- 111 uses
 			end
 			minetest.sound_play("default_dirt_footstep", {pos = pos, gain = 0.35})

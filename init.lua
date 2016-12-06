@@ -11,9 +11,15 @@
 ethereal = {}
 ethereal.leaftype = 0 -- 0 for 2D plantlike, 1 for 3D allfaces
 ethereal.leafwalk = false -- true for walkable leaves, false to fall through
+
+ethereal.crops = true -- enable appearance of built-in strawberries and onions
+ethereal.fishing = true -- enable appearance of fish and fishing rods
+
+-- Extra settings
 ethereal.cavedirt = true -- caves chop through dirt when true
 ethereal.torchdrop = true -- torches drop when touching water
 ethereal.papyruswalk = true -- papyrus can be walked on
+ethereal.lilywalk = true -- waterlilies can be walked on
 ethereal.xcraft = true -- allow one-way crafts between cobble, gravel, dirt, sand, ice, snow, dry dirt, and desert sand
 
 -- Set following to 1 to enable biome or 0 to disable
@@ -55,15 +61,12 @@ local path = minetest.get_modpath("ethereal")
 
 dofile(path .. "/plantlife.lua")
 dofile(path .. "/mushroom.lua")
-dofile(path .. "/onion.lua")
 dofile(path .. "/crystal.lua")
 dofile(path .. "/water.lua")
 dofile(path .. "/dirt.lua")
 dofile(path .. "/leaves.lua")
 dofile(path .. "/wood.lua")
 dofile(path .. "/sapling.lua")
-dofile(path .. "/strawberry.lua")
-dofile(path .. "/fishing.lua")
 dofile(path .. "/extra.lua")
 dofile(path .. "/sealife.lua")
 dofile(path .. "/fences.lua")
@@ -74,6 +77,15 @@ dofile(path .. "/bonemeal.lua")
 dofile(path .. "/compatibility.lua")
 dofile(path .. "/stairs.lua")
 dofile(path .. "/lucky_block.lua")
+
+if ethereal.fishing == true then
+	dofile(path .. "/fishing.lua")
+end
+
+if ethereal.crops == true then
+	dofile(path .. "/onion.lua")
+	dofile(path .. "/strawberry.lua")
+end
 
 if minetest.get_modpath("xanadu") then
 	dofile(path .. "/plantpack.lua")
